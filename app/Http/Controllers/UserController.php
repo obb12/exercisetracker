@@ -34,5 +34,8 @@ class UserController extends Controller
       $excercise = Exercise::where('user_id', $request->userId)->get();
       return $excercise;
     }
-  
+    public function showusers () {
+      return User::all();
+    }
+
 }

@@ -20,3 +20,4 @@ $router->get('/', function () use ($router) {
 Route::post('/api/exercise/new-user', [UserController::class, 'create']);
 Route::post('/api/exercise/add', [UserController::class, 'createexercise']);
 Route::get('/api/exercise/log', [UserController::class, 'showlog']);
+Route::get('/api/exercise/users', [UserController::class, 'showusers']);
