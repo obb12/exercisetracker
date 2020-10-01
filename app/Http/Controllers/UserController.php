@@ -35,7 +35,7 @@ class UserController extends Controller
       return $excercise;
     }
     public function showusers () {
-      return User::all();
+      return User::select('username' , 'id as _id')->get();
     }
 
 }
