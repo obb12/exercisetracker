@@ -15,10 +15,10 @@ class UserController extends Controller
       $user = new User;
       $user->username = $request->username;
       $user->save();
-      return $user->select('username' , 'id as _id');
+      //return $user->select('username' , 'id as _id');
 
-      //return response()
-        //    ->json(['username' => $user->username, '_id' => $user->id]);
+      return response()
+         ->json(['username' => $user->username, '_id' => $user->id]);
     }
     public function createexercise(Request $request)
     {
