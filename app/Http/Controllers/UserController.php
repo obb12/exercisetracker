@@ -46,13 +46,13 @@ if ($request->from && $request->to) {
   // code...
   $from = date($request->from);
   $to = date($request->to);
-  $limit = $request->has('limit') ? $request->get('limit') : 10;
+  $limit = $request->has('limit') ? $request->get('limit') : 100;
 
   $excercise = Exercise::where('user_id', $request->userId)->limit($limit)->whereBetween('date', [$from, $to])->select('description' , 'duration', 'date')->get();
 }
 else {
   // code...
-  $limit = $request->has('limit') ? $request->get('limit') : 10;
+  $limit = $request->has('limit') ? $request->get('limit') : 100;
 
   $excercise = Exercise::where('user_id', $request->userId)->limit($limit)->select('description' , 'duration', 'date')->get();
 
@@ -60,7 +60,7 @@ else {
 
       $user = User::find($request->userId);
       return response()
-         ->json(['_id' => $request->userId,'username' =>$user->username,'count' => count($excercise),'log'=>$excercise]);
+         ->json(['_id' => $request->userId,'username' =>$user->username,'count' => count(Exercise::where('user_id', $request->userId)->get()),'log'=>$excercise]);
     }
     public function showusers () {
       return User::select('username' , 'id as _id')->get();
