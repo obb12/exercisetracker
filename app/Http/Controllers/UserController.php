@@ -13,9 +13,7 @@ class UserController extends Controller
     public function create(Request $request)
     {
       $user = new User;
-      $request->validate([
-       'username' => 'required',
-   ]);
+    
       $user->username = $request->username;
       $user->save();
       //return $user->select('username' , 'id as _id');
