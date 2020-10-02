@@ -28,13 +28,12 @@ class UserController extends Controller
       $request->validate([
        'userId' => 'required',
        'description' => 'required',
-       'duration' => 'required';
    ]);
       $excercise = new Exercise;
       $excercise->user_id = $request->userId;
       $excercise->description = $request->description;
       $excercise->duration = $request->duration;
-      $excercise->date   = $request->has('date') ? $request->date : date();
+      $excercise->date   = $request->date;
       $excercise->save();
       $user = User::where('id',$excercise->user_id)->first();
       return response()
@@ -46,13 +45,13 @@ if ($request->from && $request->to) {
   // code...
   $from = date($request->from);
   $to = date($request->to);
-  $limit = $request->has('limit') ? $request->get('limit') : 100;
+  $limit = $request->has('limit') ? $request->get('limit') : 10;
 
   $excercise = Exercise::where('user_id', $request->userId)->limit($limit)->whereBetween('date', [$from, $to])->select('description' , 'duration', 'date')->get();
 }
 else {
   // code...
-  $limit = $request->has('limit') ? $request->get('limit') : 100;
+  $limit = $request->has('limit') ? $request->get('limit') : 10;
 
   $excercise = Exercise::where('user_id', $request->userId)->limit($limit)->select('description' , 'duration', 'date')->get();
 
@@ -60,7 +59,7 @@ else {
 
       $user = User::find($request->userId);
       return response()
-         ->json(['_id' => $request->userId,'username' =>$user->username,'count' => count(Exercise::where('user_id', $request->userId)->get()),'log'=>$excercise]);
+         ->json(['_id' => $request->userId,'username' =>$user->username,'count' => count($excercise),'log'=>$excercise]);
     }
     public function showusers () {
       return User::select('username' , 'id as _id')->get();
