@@ -34,7 +34,22 @@ class UserController extends Controller
     }
     public function showlog(Request $request)
     {
-      $excercise = Exercise::where('user_id', $request->userId)->select('description' , 'duration', 'date')->get();
+if ($request->from && $request->to) {
+  // code...
+  $from = date($request->from);
+  $to = date($request->to);
+  $limit = $request->has('limit') ? $request->get('limit') : 10;
+
+  $excercise = Exercise::where('user_id', $request->userId)->limit($limit)->whereBetween('date', [$from, $to])->select('description' , 'duration', 'date')->get();
+}
+else {
+  // code...
+  $limit = $request->has('limit') ? $request->get('limit') : 10;
+
+  $excercise = Exercise::where('user_id', $request->userId)->limit($limit)->select('description' , 'duration', 'date')->get();
+
+}
+
       $user = User::find($request->userId);
       return response()
          ->json(['_id' => $request->userId,'username' =>$user->username,'count' => count($excercise),'log'=>$excercise]);
