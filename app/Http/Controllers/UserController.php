@@ -28,8 +28,9 @@ class UserController extends Controller
       $excercise->duration = $request->duration;
       $excercise->date   = $request->date;
       $excercise->save();
-      return $excercise;
-
+      $user = User::where('id',$excercise->user_id);
+      return response()
+         ->json(['username' => $user->username, '_id' => $user->id,'description'=> $excercise->description,'duration' => $excercise->duration,'date' => $excercise->date]);
     }
     public function showlog(Request $request)
     {
