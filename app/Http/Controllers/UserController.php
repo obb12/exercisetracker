@@ -28,7 +28,7 @@ class UserController extends Controller
       $excercise->user_id = $request->userId;
       $excercise->description = $request->description;
       $excercise->duration = $request->duration;
-      $excercise->date = $request->filled('date') ? $request->date : date();
+      $excercise->date = $request->filled('date') ? $request->date : date('Y-m-d H:i:s');
       $excercise->save();
       $user = User::where('id',$excercise->user_id)->first();
       return response()
