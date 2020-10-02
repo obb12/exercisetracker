@@ -7,5 +7,8 @@ class Exercise extends Model{
 protected $dates = ['created_at', 'updated_at', 'date'];
 protected $casts = [
         'duration' => 'integer',
+        'date'  => 'date:D M d Y',
+
     ];
+
 }

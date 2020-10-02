@@ -34,8 +34,10 @@ class UserController extends Controller
     }
     public function showlog(Request $request)
     {
-      $excercise = Exercise::where('user_id', $request->userId)->get();
-      return $excercise;
+      $excercise = Exercise::where('user_id', $request->userId)->select('description' , 'duration', 'date')->get();
+      $user = User::find($request->userId);
+      return response()
+         ->json(['_id' => $request->userId,'username' =>$user->username,'count' => count($excercise),'log'=>$excercise]);
     }
     public function showusers () {
       return User::select('username' , 'id as _id')->get();
