@@ -13,7 +13,7 @@ class UserController extends Controller
     public function create(Request $request)
     {
       $user = new User;
-    
+
       $user->username = $request->username;
       $user->save();
       //return $user->select('username' , 'id as _id');
@@ -28,7 +28,7 @@ class UserController extends Controller
       $excercise->user_id = $request->userId;
       $excercise->description = $request->description;
       $excercise->duration = $request->duration;
-      $excercise->date   = $request->date;
+      $excercise->date   = $request->has('date') ? $request->date : $request->date;
       $excercise->save();
       $user = User::where('id',$excercise->user_id)->first();
       return response()
