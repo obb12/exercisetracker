@@ -25,10 +25,7 @@ class UserController extends Controller
     }
     public function createexercise(Request $request)
     {
-      $request->validate([
-       'userId' => 'required',
-       'description' => 'required',
-   ]);
+
       $excercise = new Exercise;
       $excercise->user_id = $request->userId;
       $excercise->description = $request->description;
